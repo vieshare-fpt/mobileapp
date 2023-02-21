@@ -55,22 +55,5 @@
       "@testing-library/jest-native/extend-expect"
     ]
   },
-  "keywords": [
-    "expo",
-    "template",
-    "expo-template",
-    "react-native-school",
-    "react-native",
-    "react-native-template",
-    "jest",
-    "eslint",
-    "prettier"
-  ],
-  "homepage": "https://github.com/ReactNativeSchool/expo-typescript-template",
-  "bugs": {
-    "url": "https://github.com/ReactNativeSchool/expo-typescript-template/issues"
-  },
-  "author": "Spencer Carli",
-  "license": "MIT",
   "private": true
 }
