@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, ImageBackground } from 'react-native';
 import colors from '../constants/colors';
 import { Text } from '../components/Text';
 import { Button } from '../components/Button';
@@ -9,12 +9,16 @@ import { useFormik, FormikErrors } from 'formik'
 import { isEmpty } from 'lodash'
 
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
     padding: 10,
+  },
+  backgroundContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
@@ -35,39 +39,41 @@ const validate = (values: FormValues) => {
 }
 
 export const Login = () => {
-  const { submit, errors, email, setEmail, password, setPassword } = useLogin();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: ''
     },
     onSubmit: () => {
-
+      console.log(formik.values);
     },
     validate: validate
   })
   return (
+
     <View style={styles.container}>
       <TextInput
+        nativeID='email'
         label="Email Address"
         placeholder="Enter your email..."
         value={formik.values.email}
-        onChangeText={formik.handleChange}
+        onChangeText={formik.handleChange('email')}
         errorText={formik.errors.email}
-        onBlur={formik.handleBlur}
+        onBlur={formik.handleBlur('email')}
         keyboardType="email-address"
         autoCapitalize="none"
       />
       <TextInput
+        nativeID='password'
         label="Password"
         placeholder="Enter your password..."
         value={formik.values.password}
-        onChangeText={formik.handleChange}
+        onChangeText={formik.handleChange('password')}
         errorText={formik.errors.password}
-        onBlur={formik.handleBlur}
+        onBlur={formik.handleBlur('password')}
         autoCapitalize="none"
       />
-      <Button onPress={submit}>Sign In</Button>
+      <Button onPress={formik.handleSubmit}>Sign In</Button>
     </View>
   );
 };
