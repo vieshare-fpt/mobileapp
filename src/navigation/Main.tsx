@@ -13,7 +13,7 @@ const MainStack = createStackNavigator<MainStackParams>();
 
 export const Main = () => (
   <MainStack.Navigator>
-    <MainStack.Screen name="Home" component={Home} />
+    {/* <MainStack.Screen name="Home" component={Home} /> */}
     <MainStack.Screen
       name="Login"
       component={Login}
