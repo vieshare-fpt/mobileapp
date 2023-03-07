@@ -36,7 +36,7 @@ const validate = (values: FormValues) => {
   return errors
 }
 
-export const Login = () => {
+export const LoginScreen = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
