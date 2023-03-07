@@ -39,12 +39,14 @@ type ButtonProps = {
   onPress: () => void;
   children: string;
   type?: 'outline';
+  disable?: boolean
 };
 
-export const Button = ({
-  onPress = () => {},
+export const ButtonCustom = ({
+  onPress = () => { },
   children = '',
   type,
+  disable
 }: ButtonProps) => {
   const containerStyles: StyleProp<ViewStyle>[] = [styles.container];
   const textStyles: StyleProp<TextStyle>[] = [styles.text];
@@ -55,7 +57,7 @@ export const Button = ({
   }
 
   return (
-    <TouchableOpacity onPress={onPress} style={containerStyles}>
+    <TouchableOpacity onPress={onPress} style={containerStyles} disabled={disable}>
       <Text style={textStyles}>{children}</Text>
     </TouchableOpacity>
   );
