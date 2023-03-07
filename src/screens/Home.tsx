@@ -36,7 +36,7 @@ type Props = {
   navigation: StackNavigationProp<MainStackParams, 'Home'>;
 };
 
-export const Home = ({ navigation }: Props) => {
+export const HomeScreen = ({ navigation }: Props) => {
   return (
     <FlatList
       style={styles.container}

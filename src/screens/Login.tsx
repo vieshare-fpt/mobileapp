@@ -1,10 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Alert, ImageBackground } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import colors from '../constants/colors';
-import { Text } from '../components/Text';
 import { Button } from '../components/Button';
 import { TextInput } from '../components/Form';
-import { useLogin } from '../util/auth';
 import { useFormik, FormikErrors } from 'formik'
 import { isEmpty } from 'lodash'
 
@@ -15,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: 10,
   },
-  backgroundContainer: {
+  backgroundContainer: { 
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -38,7 +36,7 @@ const validate = (values: FormValues) => {
   return errors
 }
 
-export const Login = () => {
+export const LoginScreen = () => {
   const formik = useFormik({
     initialValues: {
       email: '',

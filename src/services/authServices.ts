@@ -23,7 +23,7 @@ export interface IRegister {
 }
 
 export const authAPI = {
-    login(payload: ILogin) {
+    login: async (payload: ILogin) => {
         return axiosClient().post('/auth/login', payload)
     },
     loginByGoogle: async (credential: any) => {
