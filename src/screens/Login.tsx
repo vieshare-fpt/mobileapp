@@ -1,87 +1,197 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import colors from '../constants/colors';
-import { ButtonCustom } from '../components/Button';
-import { TextInput } from '../components/Form';
-import { useFormik, FormikErrors } from 'formik'
-import { isEmpty } from 'lodash'
-import { Button } from 'react-native-paper';
+import {
+  Dimensions,
+  StyleSheet,
+  ImageBackground,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 
+// galio component
+import { Text } from 'galio-framework';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Fonts from 'react-native-vector-icons/FontAwesome';
+import MeterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { withNavigation } from 'react-navigation';
+import * as theme from '../details/theme';
+
+const { width: WIDTH } = Dimensions.get('window');
+
+const image = {
+  uri:
+    'https://vieshare-stg.vi-vu.vn/loginBackground.jpg',
+};
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPass: true,
+      eyePress: false,
+    };
+  }
+
+  showPass = () => {
+    if (this.state.eyePress == false) {
+      this.setState({ showPass: false, eyePress: true });
+    } else {
+      this.setState({ showPass: true, eyePress: false });
+    }
+  };
+
+  static navigationOptions = ({ navigation }) => ({
+    header: (
+      <View style={[styles.flex, styles.row, styles.header]}>
+        <TouchableOpacity
+          style={styles.back}
+          onPress={() => navigation.goBack()}
+        >
+          <Fonts
+            name="chevron-left"
+            color="#777"
+            size={theme.sizes.font * 1}
+          />
+        </TouchableOpacity>
+      </View>
+    ),
+    headerTransparent: true,
+  });
+
+  render() {
+    return (
+      <ImageBackground source={image} style={styles.backgroundContainer}>
+        <View style={styles.logoWraper}>
+          {/* <Image source={logo} style={styles.logo} /> */}
+          <Text style={styles.logoTexts}>VieShare</Text>
+        </View>
+        {/* Form */}
+        <View style={styles.formWrapper}>
+          <Icon
+            name="user"
+            size={28}
+            color="rgba(255, 255,255,0.7)"
+            style={styles.inputIcon}
+          />
+          <TextInput
+            style={styles.inputFiels}
+            placeholder="Email"
+            placeholderTextColor="rgba(255,255,255, 0.7)"
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View style={styles.formWrapper}>
+          <Icon
+            name="lock"
+            size={28}
+            color="rgba(255, 255,255,0.7)"
+            style={styles.inputIcon}
+          />
+          <TextInput
+            secureTextEntry={this.state.showPass}
+            style={styles.inputFiels}
+            placeholder="Mật khẩu"
+            placeholderTextColor="rgba(255,255,255, 0.7)"
+            underlineColorAndroid="transparent"
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.showPass.bind(this)}
+          >
+            <MeterialIcon
+              name={
+                this.state.eyePress == false ? 'eye-outline' : 'eye-off-outline'
+              }
+              size={26}
+              color="rgba(255,255,255,0.7)"
+            />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.btnLogin}>
+          <Text style={styles.btnText}>Đăng nhập</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-    padding: 10,
-  },
   backgroundContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    width: undefined,
+    height: undefined,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  loginWithGoogle: {
-    width: '50%',
+  row: {
+    flexDirection: 'row',
   },
-  socialButtonContainer: {
-    flex: 1,
-    alignItems: "center",
-  }
+  header: {
+    // backgroundColor: 'transparent',
+    paddingHorizontal: theme.sizes.padding,
+    paddingTop: theme.sizes.padding,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  formWrapper: {
+    marginTop: 10,
+  },
+  logoWraper: {
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  logoTexts: {
+    fontSize: 60,
+    fontWeight: '600',
+    fontFamily: 'ProductSans-Regular',
+    color: '#2e7d32',
+    textShadowColor: '#fff',
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1,
+  },
+  logo: {
+    width: 70,
+    height: 70,
+  },
+  inputIcon: {
+    position: 'absolute',
+    top: 8,
+    left: 37,
+  },
+  inputFiels: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 25,
+    fontSize: 16,
+    paddingLeft: 45,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginHorizontal: 25,
+    fontFamily: 'ProductSans-Regular',
+  },
+  button: {
+    position: 'absolute',
+    top: 8,
+    right: 37,
+  },
+  btnLogin: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: theme.colors.THEME,
+    justifyContent: 'center',
+    fontFamily: 'ProductSans-Regular',
+    marginTop: 20,
+  },
+  btnText: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 16,
+    textAlign: 'center',
+  },
 });
 
-interface FormValues {
-  email: string,
-  password: string
-}
-const validate = (values: FormValues) => {
-  const errors: FormikErrors<FormValues> = {}
-  if (isEmpty(values.email)) {
-    errors.email = "Email requied"
-  }
-  if (isEmpty(values.password)) {
-    errors.password = "Password requied"
-  }
-
-  return errors
-}
-
-export const LoginScreen = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    onSubmit: () => {
-      console.log(formik.values);
-    },
-    validate: validate
-  })
-  return (
-
-    <View style={styles.container}>
-      <View></View>
-      <TextInput
-        nativeID='email'
-        label="Email Address"
-        placeholder="Enter your email..."
-        value={formik.values.email}
-        onChangeText={formik.handleChange('email')}
-        onBlur={formik.handleBlur('email')}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        nativeID='password'
-        label="Password"
-        placeholder="Enter your password..."
-        value={formik.values.password}
-        onChangeText={formik.handleChange('password')}
-        onBlur={formik.handleBlur('password')}
-        autoCapitalize="none"
-      />
-      <Button style={{ marginBottom: 10, backgroundColor: 'green', width: '80%', alignSelf: 'center' }} onPress={() => formik.handleSubmit} mode="contained" icon="login" >Sign In</Button>
-      <View style={styles.socialButtonContainer}>
-        <Button style={styles.loginWithGoogle} icon="google" mode="contained" onPress={() => console.log('Pressed')}>Login with Google</Button>
-      </View>
-    </View>
-  );
-};
+export default withNavigation(Login);
